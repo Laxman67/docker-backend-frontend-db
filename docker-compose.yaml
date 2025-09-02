@@ -1,0 +1,21 @@
+name: my-app-with-docker
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  my-app:
+    image:  practice-backend
+    ports:
+      - "3010:3010"
+    container_name: backend  
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.5
+      - PORT=3010
+
+volumes:
+  mongo_data:
